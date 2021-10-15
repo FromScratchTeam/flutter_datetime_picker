@@ -12,6 +12,7 @@ class DatePickerTheme with DiagnosticableTreeMixin {
 
   final double containerHeight;
   final double titleHeight;
+  final double bottomActionHeight;
   final double itemHeight;
 
   const DatePickerTheme({
@@ -22,6 +23,7 @@ class DatePickerTheme with DiagnosticableTreeMixin {
     this.headerColor,
     this.containerHeight = 210.0,
     this.titleHeight = 44.0,
+    this.bottomActionHeight = 50.0,
     this.itemHeight = 36.0,
   });
 }
