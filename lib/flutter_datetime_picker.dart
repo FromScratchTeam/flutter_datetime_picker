@@ -23,6 +23,7 @@ class DatePicker {
   static Future<DateTime?> showDatePicker(
     BuildContext context, {
     bool showTitleActions: true,
+    bool showLastColumn: true,
     DateTime? minTime,
     DateTime? maxTime,
     DateChangedCallback? onChanged,
@@ -45,6 +46,7 @@ class DatePicker {
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         pickerModel: DatePickerModel(
           currentTime: currentTime,
+          showLastColumn: showLastColumn,
           maxTime: maxTime,
           minTime: minTime,
           locale: locale,
