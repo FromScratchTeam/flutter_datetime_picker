@@ -206,6 +206,11 @@ class DatePickerModel extends CommonPickerModel {
       return '${minDay + index}${_localeDay()}';
     });
   }
+  
+  @override
+  List<int> layoutProportions() {
+    return [1, 1, 0];
+  }
 
   @override
   void setLeftIndex(int index) {
