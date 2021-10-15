@@ -32,6 +32,7 @@ class DatePicker {
     locale: LocaleType.en,
     DateTime? currentTime,
     DatePickerTheme? theme,
+    Widget? bottomActionWidget,
   }) async {
     return await Navigator.push(
       context,
@@ -42,6 +43,7 @@ class DatePicker {
         onCancel: onCancel,
         locale: locale,
         theme: theme,
+        bottomActionWidget: bottomActionWidget,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
         pickerModel: DatePickerModel(
@@ -68,6 +70,7 @@ class DatePicker {
     locale: LocaleType.en,
     DateTime? currentTime,
     DatePickerTheme? theme,
+    Widget? bottomActionWidget,
   }) async {
     return await Navigator.push(
       context,
@@ -77,6 +80,7 @@ class DatePicker {
         onConfirm: onConfirm,
         onCancel: onCancel,
         locale: locale,
+        bottomActionWidget: bottomActionWidget,
         theme: theme,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -101,6 +105,7 @@ class DatePicker {
     locale: LocaleType.en,
     DateTime? currentTime,
     DatePickerTheme? theme,
+    Widget? bottomActionWidget,
   }) async {
     return await Navigator.push(
       context,
@@ -110,6 +115,7 @@ class DatePicker {
         onConfirm: onConfirm,
         onCancel: onCancel,
         locale: locale,
+        bottomActionWidget: bottomActionWidget,
         theme: theme,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -135,6 +141,7 @@ class DatePicker {
     locale: LocaleType.en,
     DateTime? currentTime,
     DatePickerTheme? theme,
+    Widget? bottomActionWidget,
   }) async {
     return await Navigator.push(
       context,
@@ -144,6 +151,7 @@ class DatePicker {
         onConfirm: onConfirm,
         onCancel: onCancel,
         locale: locale,
+        bottomActionWidget: bottomActionWidget,
         theme: theme,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -169,6 +177,7 @@ class DatePicker {
     locale: LocaleType.en,
     BasePickerModel? pickerModel,
     DatePickerTheme? theme,
+    Widget? bottomActionWidget,
   }) async {
     return await Navigator.push(
       context,
@@ -178,6 +187,7 @@ class DatePicker {
         onConfirm: onConfirm,
         onCancel: onCancel,
         locale: locale,
+        bottomActionWidget: bottomActionWidget,
         theme: theme,
         barrierLabel:
             MaterialLocalizations.of(context).modalBarrierDismissLabel,
@@ -196,6 +206,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
     DatePickerTheme? theme,
     this.barrierLabel,
     this.locale,
+    this.bottomActionWidget,
     RouteSettings? settings,
     BasePickerModel? pickerModel,
   })  : this.pickerModel = pickerModel ?? DatePickerModel(),
@@ -209,6 +220,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
   final LocaleType? locale;
   final DatePickerTheme theme;
   final BasePickerModel pickerModel;
+  final Widget? bottomActionWidget;
 
   @override
   Duration get transitionDuration => const Duration(milliseconds: 200);
@@ -243,6 +255,7 @@ class _DatePickerRoute<T> extends PopupRoute<T> {
         locale: this.locale,
         route: this,
         pickerModel: pickerModel,
+        bottomActionWidget: bottomActionWidget,
       ),
     );
     return InheritedTheme.captureAll(context, bottomSheet);
@@ -254,6 +267,7 @@ class _DatePickerComponent extends StatefulWidget {
     Key? key,
     required this.route,
     required this.pickerModel,
+    this.bottomActionWidget,
     this.onChanged,
     this.locale,
   }) : super(key: key);
@@ -265,6 +279,8 @@ class _DatePickerComponent extends StatefulWidget {
   final LocaleType? locale;
 
   final BasePickerModel pickerModel;
+
+  final Widget? bottomActionWidget;
 
   @override
   State<StatefulWidget> createState() {
@@ -307,6 +323,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
                 widget.route.animation!.value,
                 theme,
                 showTitleActions: widget.route.showTitleActions!,
+                bottomActionWidget: widget.bottomActionWidget,
                 bottomPadding: bottomPadding,
               ),
               child: GestureDetector(
@@ -335,6 +352,7 @@ class _DatePickerState extends State<_DatePickerComponent> {
         children: <Widget>[
           _renderTitleActionsView(theme),
           itemView,
+          widget.bottomActionWidget ?? Container(),
         ],
       );
     }
@@ -540,6 +558,7 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
     this.itemCount,
     this.showTitleActions,
     this.bottomPadding = 0,
+    this.bottomActionWidget,
   });
 
   final double progress;
@@ -547,12 +566,17 @@ class _BottomPickerLayout extends SingleChildLayoutDelegate {
   final bool? showTitleActions;
   final DatePickerTheme theme;
   final double bottomPadding;
+  final Widget? bottomActionWidget;
 
   @override
   BoxConstraints getConstraintsForChild(BoxConstraints constraints) {
     double maxHeight = theme.containerHeight;
     if (showTitleActions == true) {
       maxHeight += theme.titleHeight;
+    }
+
+    if (bottomActionWidget != null) {
+      maxHeight += theme.bottomActionHeight;
     }
 
     return BoxConstraints(
