@@ -141,6 +141,7 @@ class DatePickerModel extends CommonPickerModel {
       : super(locale: locale) {
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
     this.minTime = minTime ?? DateTime(1970, 1, 1);
+    this.showLastColumn = showLastColumn;
 
     currentTime = currentTime ?? DateTime.now();
 
