@@ -130,13 +130,13 @@ class CommonPickerModel extends BasePickerModel {
 class DatePickerModel extends CommonPickerModel {
   late DateTime maxTime;
   late DateTime minTime;
-	late bool showLastColumn;
+  late bool showLastColumn;
 
   DatePickerModel(
       {DateTime? currentTime,
       DateTime? maxTime,
       DateTime? minTime,
-			bool showLastColumn = true,
+      bool showLastColumn = true,
       LocaleType? locale})
       : super(locale: locale) {
     this.maxTime = maxTime ?? DateTime(2049, 12, 31);
